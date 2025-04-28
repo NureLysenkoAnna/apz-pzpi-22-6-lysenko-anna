@@ -104,6 +104,8 @@
 ДОДАТОК В
 Приклади програмного коду
 
+GitHub репозиторій: https://github.com/NureLysenkoAnna/apz-pzpi-22-6-lysenko-anna/blob/main/Pract1/pzpi-22-6-lysenko-anna-design-pattern/CodeExample.java
+
 1  public interface Logger {
 2      void logInfo(String message);
 3      void logError(String message);
