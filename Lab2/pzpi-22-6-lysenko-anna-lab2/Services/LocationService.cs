@@ -75,6 +75,13 @@ namespace GasDec.Services
                 .Where(l => l.location_type.ToLower() == type.ToLower()).ToListAsync();
         }
 
+        /// <summary>
+        /// Обчислює необхідну кількість сенсорів для вказаної локації.
+        /// </summary>
+        /// <param name="locationId">ID локації, для якої обчислюється кількість сенсорів.</param>
+        /// <param name="minRequiredSensors">Мінімально необхідна кількість сенсорів.</param>
+        /// <returns>Необхідна кількість сенсорів для локації.</returns>
+        /// <exception cref="ArgumentException">Кидає виключення, якщо локація не знайдена.</exception>
         public async Task<int> CalculateRequiredSensorsAsync(int locationId, int? minRequiredSensors = null)
         {
             var location = await _context.Locations.FindAsync(locationId);
