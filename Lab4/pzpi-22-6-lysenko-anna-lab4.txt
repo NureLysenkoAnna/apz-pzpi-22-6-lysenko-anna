@@ -1,0 +1,248 @@
+МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ
+ХАРКІВСЬКИЙ НАЦІОНАЛЬНИЙ  УНІВЕРСИТЕТ РАДІОЕЛЕКТРОНІКИ
+
+
+Кафедра «Програмної інженерії»
+
+
+ЗВІТ
+з лабораторної роботи №4
+з дисципліни «Архітектура програмного забезпечення»
+на тему: «Розробка програмної архітектури, створення та відлагодження програмного коду програмного мобільного пристрою для програмної системи»
+
+
+Виконала                            Перевірив
+ст. гр. ПЗПІ-22-6                   ст. викладач кафедри ПІ
+Лисенко Анна Миколаївна             Сокорчук Ігор Петрович
+
+
+
+Харків 2025
+
+1 ІСТОРІЯ ЗМІН
+№       Дата            Версія звіту        Опис змін та виправлень
+1       10.06.2025          0.1             Створено розділи «Історія змін», «Завдання».
+2       11.06.2025          0.2             У додаток Б додано побудовані діаграми.
+3       11.06.2025          0.3             Заповнено розділи «Опис виконаної роботи», «Висновки».
+4       12.06.2025          0.4             Додано у додаток А посилання на відео, описано його хронологію. 
+5       12.06.2025          0.5             У додатку В представлено приклади коду.
+     
+2 ЗАВДАННЯ
+1. Розробити мобільний програмний застосунок для будь-якої поширеної на сьогодні мобільної платформи, що буде взаємодіяти з системою, що розробляється.
+2. Створити ER-діаграму (модель) даних (Entity–Relationship Model) мобільної платформи.
+3. Створити UML-діаграму прецедентів (Use Case Diagram).
+4. Створити UML-діаграму діяльності (Activity Diagram).
+5. Побудувати UML-діаграму компонентів (Component Diagram).
+     
+3 ОПИС ВИКОНАНОЇ РОБОТИ
+1. Мобільний клієнт було реалізовано мовою Kotlin з використанням середовища розробки Android Studio. Розробка орієнтована на платформу Android, із використанням Android SDK.
+2. У мобільному програмному застосунку реалізовано механізм аутентифікації користувачів за допомогою логіна й пароля з обробкою JWT-токена. Забезпечено відображення сенсорів за локацією користувача та детального перегляду даних для кожного з них. Створено окремі адаптери для відображення перевірок та даних сенсора з підтримкою форматування дати та візуальних індикаторів результату.
+3. Для мобільного клієнта було побудовано UML-діаграму прецедентів. Також було створено UML-діаграму компонентів,  UML-діаграму діяльності.
+4. Побудовано ER-діаграму (модель) даних (Entity–Relationship Model) мобільної платформи.
+
+4 ВИСНОВКИ
+У результаті виконання лабораторної роботи було розроблено мобільний програмний застосунок, що взаємодіє безпосередньо з програмною системою, що розроблялася. Крім цього, було описано та побудовано UML-діаграму прецедентів, UML-діаграму компонентів, UML-діаграму діяльності та ER-діаграму (модель) даних мобільної платформи. У додатку Б наведено всі діаграми та моделі, крім цього, винесено структуру бази даних системи.
+
+ДОДАТОК А
+Посилання на відеозапис та текст хронологічного опису відео
+     
+Відеозапис доповіді на YouTube: https://youtu.be/mi9D_vkwvrw
+
+Хронологічний опис відеозапису:
+00:00 ‒ Вступ.
+00:14 ‒ Використані технології.
+00:35 ‒ Призначення мобільного застосунку як частини системи для виявлення витоків газу.
+01:00 ‒ Перевірка авторизації: обмеження доступу лише для користувачів з роллю мешканець.
+01:42 ‒ Перевірка авторизації: обробка помилок і валідація введених даних.
+02:02 ‒ Успішний вхід до системи: перехід на головну сторінку додатку.
+03:00 ‒ Перегляд списку встановлених сенсорів за локацією користувача.
+03:31 ‒ Перегляд інформації про встановлені сенсори: список проведених перевірок.
+04:12 ‒ Перегляд інформації про встановлені сенсори: отримані дані.
+05:11 ‒ Висновки.
+
+ДОДАТОК Б
+Графічні матеріали
+
+Рисунок Б.1 ‒ ER-діаграма даних
+
+Рисунок Б.2 ‒ Структура бази даних
+
+Рисунок Б.3 ‒ UML-діаграма прецедентів
+
+Рисунок Б.4 ‒ UML-діаграма діяльності
+
+Рисунок Б.5 ‒ UML-діаграма компонентів
+
+ДОДАТОК В
+Програмний код
+
+В.1 Аутентифікація та ініціалізація сеансу користувача
+GitHub репозиторій: https://github.com/NureLysenkoAnna/apz-pzpi-22-6-lysenko-anna/blob/main/Lab4/pzpi-22-6-lysenko-anna-lab4/src/main/java/com/example/gasleakapp/ui/LoginActivity.kt
+
+1  class LoginActivity : AppCompatActivity() {
+2  
+3    private fun getUserRoleFromJwt(token: String): String? {
+4      return try {
+5        val parts = token.split(".")
+6        val payload = String(Base64.decode(parts[1], Base64.DEFAULT))
+7        val json = JSONObject(payload)
+8        json.getString("role")
+9      } catch (e: Exception) {
+10       null
+11     }
+12   }
+13  
+14   private fun showError(message: String, tv: TextView) {
+15     tv.text = message
+16     tv.alpha = 0f
+17     tv.visibility = TextView.VISIBLE
+18     tv.animate().alpha(1f).setDuration(300).start()
+19  
+20     tv.postDelayed({
+21       tv.animate().alpha(0f).setDuration(300).withEndAction {
+22         tv.visibility = TextView.GONE
+23         tv.text = ""
+24       }.start()
+25     }, 3000)
+26   }
+27  
+28   override fun onCreate(savedInstanceState: Bundle?) {
+29     super.onCreate(savedInstanceState)
+30     setContentView(R.layout.activity_login)
+31  
+32     val etEmail = findViewById<EditText>(R.id.etEmail)
+33     val etPassword = findViewById<EditText>(R.id.etPassword)
+34     val btnLogin = findViewById<Button>(R.id.btnLogin)
+35     val tvErrorMessage = findViewById<TextView>(R.id.tvErrorMessage)
+36  
+37     btnLogin.setOnClickListener {
+38       val email = etEmail.text.toString().trim()
+39       val password = etPassword.text.toString().trim()
+40  
+41       tvErrorMessage.visibility = TextView.GONE
+42       tvErrorMessage.text = ""
+43  
+44       var hasError = false
+45       val errorBuilder = StringBuilder()
+46  
+47       if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+48         errorBuilder.append("Невірний формат email\n")
+49         hasError = true
+50       }
+51  
+52       if (password.length < 4) {
+53         errorBuilder.append("Пароль має містити щонайменше 4 символи")
+54         hasError = true
+55       }
+56  
+57       if (hasError) {
+58         showError(errorBuilder.toString().trim(), tvErrorMessage)
+59         return@setOnClickListener
+60       }
+61  
+62       lifecycleScope.launch {
+63         try {
+64           val response = ApiClient.apiService.login(LoginRequest(email, password))
+65           if (response.isSuccessful) {
+66             val token = response.body()?.token ?: ""
+67  
+68             val role = getUserRoleFromJwt(token)
+69             if (role?.lowercase() != "resident") {
+70               showError("Доступ дозволено лише мешканцям", tvErrorMessage)
+71               return@launch
+72             }
+73  
+74             val sharedPref = getSharedPreferences("auth", MODE_PRIVATE)
+75             sharedPref.edit().putString("token", token).apply()
+76  
+77             val intent = Intent(this@LoginActivity, MainActivity::class.java)
+78             startActivity(intent)
+79             finish()
+80           } else {
+81             showError("Невірні облікові дані", tvErrorMessage)
+82           }
+83         } catch (e: Exception) {
+84           showError("Помилка мережі: ${e.message}", tvErrorMessage)
+85         }
+86       }
+87     }
+88   }
+89 }
+
+В.2 Завантаження та візуалізація сенсорів за місцем встановлення (локацією)
+GitHub репозиторій: https://github.com/NureLysenkoAnna/apz-pzpi-22-6-lysenko-anna/blob/main/Lab4/pzpi-22-6-lysenko-anna-lab4/src/main/java/com/example/gasleakapp/adapters/SensorAdapter.kt
+
+1  class SensorAdapter(
+2    private val sensors: List<Sensor>,
+3    private val onClick: (Sensor) -> Unit
+4  ) : RecyclerView.Adapter<SensorAdapter.SensorViewHolder>() {
+5  
+6    class SensorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+7      val tvName: TextView = itemView.findViewById(R.id.tvSensorType)
+8      val tvStatus: TextView = itemView.findViewById(R.id.tvSensorStatus)
+9      val tvDate: TextView = itemView.findViewById(R.id.tvSensorDate)
+10   }
+11 
+12   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SensorViewHolder {
+13     val view = LayoutInflater.from(parent.context)
+14       .inflate(R.layout.item_sensor, parent, false)
+15     return SensorViewHolder(view)
+16   }
+17 
+18   override fun onBindViewHolder(holder: SensorViewHolder, position: Int) {
+19     val sensor = sensors[position]
+20     holder.tvName.text = sensor.type
+21     holder.tvStatus.text = "Статус: ${sensor.status}"
+22     holder.tvDate.text = "Встановлено: ${DateUtils.formatInstallDate(sensor.installation_date)}"
+23 
+24     holder.itemView.setOnClickListener {
+25       onClick(sensor)
+26     }
+27   }
+28 
+29   override fun getItemCount(): Int = sensors.size
+30 }
+
+В.3 Перегляд інформації про сенсори: результати перевірок
+GitHub репозиторій: https://github.com/NureLysenkoAnna/apz-pzpi-22-6-lysenko-anna/blob/main/Lab4/pzpi-22-6-lysenko-anna-lab4/src/main/java/com/example/gasleakapp/adapters/SensorCheckAdapter.kt
+
+1  class SensorCheckAdapter : RecyclerView.Adapter<SensorCheckViewHolder>() {  
+2    private val items = mutableListOf<SensorCheck>()  
+3  
+4    fun setData(newItems: List<SensorCheck>) {  
+5      items.clear()  
+6      items.addAll(newItems)  
+7      notifyDataSetChanged()  
+8    }  
+9  
+10   override fun onCreateViewHolder(parent: android.view.ViewGroup, viewType: Int):  
+11     SensorCheckViewHolder {  
+12     val view = android.view.LayoutInflater.from(parent.context)  
+13       .inflate(R.layout.item_sensor_check, parent, false)  
+14     return SensorCheckViewHolder(view)  
+15   }  
+16  
+17   override fun onBindViewHolder(holder: SensorCheckViewHolder, position: Int) {  
+18     holder.bind(items[position])  
+19   }  
+20  
+21   override fun getItemCount(): Int = items.size  
+22 }  
+23  
+24 class SensorCheckViewHolder(view: android.view.View) : RecyclerView.ViewHolder(view) {  
+25   private val tvCheckInfo: TextView = view.findViewById(R.id.tvCheckInfo)  
+26  
+27   fun bind(item: SensorCheck) {  
+28     val formattedDate = DateUtils.formatDateTime(item.check_date)  
+29     tvCheckInfo.text = "$formattedDate — ${item.result}"  
+30     tvCheckInfo.setTextColor(getColorForResult(item.result))  
+31   }  
+32  
+33   private fun getColorForResult(result: String): Int {  
+34     return when (result.lowercase(Locale.getDefault())) {  
+35       "успішно", "success" -> Color.parseColor("#2E7D32")  
+36       "помилка", "failed", "error" -> Color.parseColor("#C62828")  
+37       else -> Color.parseColor("#616161")  
+38     }  
+39   }  
+40 }
