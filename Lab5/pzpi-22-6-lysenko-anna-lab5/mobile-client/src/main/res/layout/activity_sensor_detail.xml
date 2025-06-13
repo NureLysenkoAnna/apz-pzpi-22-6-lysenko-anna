@@ -1,0 +1,84 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSensorInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Тип: Газ / Статус: Активний / Встановлено: 2024-06-01"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#333"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="50dp"/>
+
+        <!-- Перевірки -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🧪 Перевірки"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="#000"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvNoChecks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Перевірок для цього сенсора не знайдено"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:padding="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSensorChecks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Дані -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📊 Дані з сенсорів"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="#000"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tvNoData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Даних для цього сенсора не знайдено"
+            android:visibility="gone"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:padding="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSensorData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Назад"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFF"/>
+    </LinearLayout>
+</ScrollView>
